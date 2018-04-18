@@ -1,0 +1,1 @@
+"./general.o" "./hidkp.o" "./hidsw12.o" "./main.o" "./pwm_led.o" "./sm1_color.o" "./sm2_color.o" "./systick.o" "./tm4c123gh6pm_startup_ccs_gcc.o" -Wl,-T"../tm4c123gh6pm.lds" 

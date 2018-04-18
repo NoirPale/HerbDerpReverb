@@ -113,7 +113,7 @@ int main(void)
 {
 
     float delay = 250;
-    float decay = -0.25f;
+    float decay = 0.25f;
     int crap;
     crap = ReadRaw(1);
     while (crap)

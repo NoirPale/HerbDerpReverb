@@ -25,20 +25,22 @@
 /*****************************   Constants   ********************************/
 
 /*****************************   Variables   ********************************/
-
+int Huff[22050] = {0};
+int Puff[2];
 /*****************************   Functions   *********************************
  *   Function : See General module specification (general.h-file).
  *****************************************************************************/
 
 int ReadRaw(char * namae, int state)
 {
+    FILE *stick;
     int answer = 1;
     if (state)
     {
-        FILE *stick;
+
         stick = fopen(namae, "rb");
         fread(Puff, 2, 1, stick);
-        if (stick == EOF)
+        if (feof(stick) > 0)
         {
             answer = 0;
         }
@@ -86,8 +88,7 @@ void ReDerp(int *Huff, int *Puff, int delay, int decay)
 
 int main(void)
 {
-    int Huff[22050] = {0};
-    int Puff[2];
+
     int delay = 250;
     float decay = -0.25f;
     while(ReadRaw("moeller.raw",1))

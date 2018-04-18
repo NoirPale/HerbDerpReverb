@@ -58,7 +58,7 @@ void WRaw(char * name, int state)
     if (state)
     {
         pout = fopen(name, "wb");
-        fwrite(Puff, 1, 1, name);
+        fwrite(Puff, 1, 1, pout);
     }
     else
     {

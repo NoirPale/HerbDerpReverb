@@ -39,12 +39,12 @@ int ReadRaw(int state)
     if (virgin)
     {
         stick = fopen("moeller.raw", "rb");
+        if (stick == NULL)
+            printf("Failed to open file moeller.raw.\n");
         virgin = 0;
     }
     if (state)
     {
-        if(stick == NULL)
-            printf("Failed to open file moeller.raw.\n");
 
         fread(Puff, 1, 1, stick);
         if (feof(stick) > 0)
@@ -66,12 +66,12 @@ void WRaw(int state)
     if (touched_for_the_very_first_time)
     {
         pout = fopen("bajer.raw", "wb");
+        if (pout == NULL)
+            printf("Failed to open file bajer.raw.\n");
         touched_for_the_very_first_time = 0;
     }
     if (state)
     {
-        if (pout == NULL)
-            printf("Failed to open file bajer.raw.\n");
 
         fwrite(Puff, 1, 1, pout);
     }

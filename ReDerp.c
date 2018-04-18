@@ -1,21 +1,21 @@
 /*****************************************************************************
-* University of Southern Denmark
-* Embedded Programming (EMP)
-*
-* MODULENAME.: ReDerp.c
-*
-* PROJECT....: HerbDerpReverb
-*
-* DESCRIPTION: See module specification file (.h-file).
-*
-* Change Log:
-******************************************************************************
-* Date			Id	  Change
-* MMM DD, YYYY
-* ----------------------------------------------------------------------------
-* Apr 18, 2018	SoF   Module created.
-*
-*****************************************************************************/
+ * University of Southern Denmark
+ * Embedded Programming (EMP)
+ *
+ * MODULENAME.: ReDerp.c
+ *
+ * PROJECT....: HerbDerpReverb
+ *
+ * DESCRIPTION: See module specification file (.h-file).
+ *
+ * Change Log:
+ ******************************************************************************
+ * Date			Id	  Change
+ * MMM DD, YYYY
+ * ----------------------------------------------------------------------------
+ * Apr 18, 2018	SoF   Module created.
+ *
+ *****************************************************************************/
 
 /***************************** Include files ********************************/
 #include <stdio.h>
@@ -27,47 +27,71 @@
 /*****************************   Variables   ********************************/
 
 /*****************************   Functions   *********************************
-*   Function : See General module specification (general.h-file).
-*****************************************************************************/
+ *   Function : See General module specification (general.h-file).
+ *****************************************************************************/
 int Puff;
 
-void ReadRaw(void)
+void ReadRaw(char * name, int state)
 {
-	
+    if(state)
+    {
+    FILE *p_in;
+    p_in = fopen(name, "rb");
+
+    }
+    else
+    {
+    fclose(p_in);
+    }
 }
 
-void WRaw(int * Smack, int * name, int l )
+void WRaw(int * Smack, char * name, int state)
 {
+    if(state)
+    {
+    FILE *p_out;
+    p_out = fopen(name, "wb");
 
+    }
+    else
+    {
+    fclose(p_in);
+    }
 }
 
-int * ReDerp(int *Puff)
+void ReDerp(int *Puff)
 {
-	
+    int delay = 500; // half a second
+        int delaySamples = (int) ((float) delay * 44.1f); // assumes 44100 Hz sample rate
+        float decay = 0.5f;
+        for (int i = 0; i < buffer.length - delaySamples; i++)
+        {
+            // WARNING: overflow potential
+            fread(buffer, 2, 1, p_in);
+            buffer[i + delaySamples] += (short) ((float) buffer[i] * decay);
+        }
 }
 
-int main (void)
+int main(void)
 {
-    FILE *p_in, *p_out;
-       p_in = fopen("PLACEHOLDER", "rb");
-       p_out = fopen("PLACEHOLDER", "wb");
-       int buffer[22050];
-       fread(buffer, )
-       int delay = 500; // half a second
-       int delaySamples =
-           (int)((float)delay * 44.1f); // assumes 44100 Hz sample rate
-       float decay = 0.5f;
-       for (int i = 0; i < buffer.length - delaySamples; i++)
-       {
-           // WARNING: overflow potential
-           fread(buffer, 2, 1, p_in);
-           buffer[i + delaySamples] += (short)((float)buffer[i] * decay);
-       }
+    int Puff;
 
-       fclose(p_in);
-       fclose(p_out);
+    int buffer[22050];
+    fread(buffer, )
+    int delay = 500; // half a second
+    int delaySamples = (int) ((float) delay * 44.1f); // assumes 44100 Hz sample rate
+    float decay = 0.5f;
+    for (int i = 0; i < buffer.length - delaySamples; i++)
+    {
+        // WARNING: overflow potential
+        fread(buffer, 2, 1, p_in);
+        buffer[i + delaySamples] += (short) ((float) buffer[i] * decay);
+    }
 
-       return 0;
+    fclose(p_in);
+    fclose(p_out);
+
+    return 0;
 }
 
 /****************************** End Of Module *******************************/

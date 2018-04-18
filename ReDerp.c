@@ -33,43 +33,43 @@ int Puff;
 
 void ReadRaw(char * name, int state)
 {
-    if(state)
+    if (state)
     {
-    FILE *p_in;
-    p_in = fopen(name, "rb");
+        FILE *p_in;
+        p_in = fopen(name, "rb");
 
     }
     else
     {
-    fclose(p_in);
+        fclose(p_in);
     }
 }
 
 void WRaw(int * Smack, char * name, int state)
 {
-    if(state)
+    if (state)
     {
-    FILE *p_out;
-    p_out = fopen(name, "wb");
+        FILE *p_out;
+        p_out = fopen(name, "wb");
 
     }
     else
     {
-    fclose(p_in);
+        fclose(p_in);
     }
 }
 
 void ReDerp(int *Puff)
 {
     int delay = 500; // half a second
-        int delaySamples = (int) ((float) delay * 44.1f); // assumes 44100 Hz sample rate
-        float decay = 0.5f;
-        for (int i = 0; i < buffer.length - delaySamples; i++)
-        {
-            // WARNING: overflow potential
-            fread(buffer, 2, 1, p_in);
-            buffer[i + delaySamples] += (short) ((float) buffer[i] * decay);
-        }
+    int delaySamples = (int) ((float) delay * 44.1f); // assumes 44100 Hz sample rate
+    float decay = 0.5f;
+    for (int i = 0; i < buffer.length - delaySamples; i++)
+    {
+        // WARNING: overflow potential
+        fread(buffer, 1, 1, p_in);
+        buffer[i + delaySamples] += (short) ((float) buffer[i] * decay);
+    }
 }
 
 int main(void)

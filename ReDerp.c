@@ -74,7 +74,7 @@ void WRaw(int state)
     }
     if (state)
     {
-
+        printf("soggy condom\n");
         fwrite(Puff, 1, 1, pout);
         printf("Hele molevitten.\n");
     }

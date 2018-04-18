@@ -29,68 +29,74 @@
 /*****************************   Functions   *********************************
  *   Function : See General module specification (general.h-file).
  *****************************************************************************/
-int Puff;
 
-void ReadRaw(char * name, int state)
+int ReadRaw(char * namae, int state)
 {
-    if(state)
+    int answer = 1;
+    if (state)
     {
-    FILE *p_in;
-    p_in = fopen(name, "rb");
-
+        FILE *stick;
+        stick = fopen(namae, "rb");
+        fread(Puff, 2, 1, stick);
+        if (stick == EOF)
+        {
+            answer = 0;
+        }
     }
     else
     {
-    fclose(p_in);
+        fclose(stick);
     }
+    return answer;
 }
 
 void WRaw(int * Smack, char * name, int state)
 {
-    if(state)
+    if (state)
     {
-    FILE *p_out;
-    p_out = fopen(name, "wb");
-
+        FILE *pout;
+        pout = fopen(name, "wb");
+        fwrite(Puff, 1, 1, name);
     }
     else
     {
-    fclose(p_in);
+        fclose(pout);
     }
 }
 
-void ReDerp(int *Puff)
+void ReDerp(int *Huff, int *Puff, int delay, int decay)
 {
-    int delay = 500; // half a second
-        int delaySamples = (int) ((float) delay * 44.1f); // assumes 44100 Hz sample rate
-        float decay = 0.5f;
-        for (int i = 0; i < buffer.length - delaySamples; i++)
-        {
-            // WARNING: overflow potential
-            fread(buffer, 2, 1, p_in);
-            buffer[i + delaySamples] += (short) ((float) buffer[i] * decay);
-        }
+    static int layS = (int) ((float) delay * 44.1f); // assumes 44100 Hz sample rate
+    static uint16_t iter = 0;
+    if (iter == 0)
+    {
+        Puff[0] += Huff[layS]
+    }
+    else
+    {
+        Puff[0] += Huff[iter - 1]
+    }
+    Huff[iter] = (decay * Puff[0]);
+    iter++;
+    if (iter == (layS + 1))
+    {
+        iter = 0;
+    }
 }
 
 int main(void)
 {
-    int Puff;
-
-    int buffer[22050];
-    fread(buffer, )
-    int delay = 500; // half a second
-    int delaySamples = (int) ((float) delay * 44.1f); // assumes 44100 Hz sample rate
-    float decay = 0.5f;
-    for (int i = 0; i < buffer.length - delaySamples; i++)
+    int Huff[22050] = {0};
+    int Puff[2];
+    int delay = 250;
+    float decay = -0.25f;
+    while(ReadRaw("moeller.raw",1))
     {
-        // WARNING: overflow potential
-        fread(buffer, 2, 1, p_in);
-        buffer[i + delaySamples] += (short) ((float) buffer[i] * decay);
+    ReDerp(Huff, Puff, delay, decay);
+    WRaw("bajer.raw",1);
     }
-
-    fclose(p_in);
-    fclose(p_out);
-
+    ReadRaw("moeller.raw", 0);
+    WRaw("bajer.raw",0);
     return 0;
 }
 

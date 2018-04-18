@@ -33,12 +33,16 @@ int Puff[2];
 
 int ReadRaw(int state)
 {
+    static int virgin = 1;
     FILE *stick;
     int answer = 1;
+    if (virgin)
+    {
+        stick = fopen("moeller.raw", "rb");
+        virgin = 0;
+    }
     if (state)
     {
-
-        stick = fopen("moeller.raw", "rb");
         if(stick == NULL)
             printf("Failed to open file moeller.raw.\n");
 
@@ -57,11 +61,15 @@ int ReadRaw(int state)
 
 void WRaw(int state)
 {
+    static int touched_for_the_very_first_time = 1;
     FILE *pout;
-
-    if (state)
+    if (touched_for_the_very_first_time)
     {
         pout = fopen("bajer.raw", "wb");
+        touched_for_the_very_first_time = 0;
+    }
+    if (state)
+    {
         if (pout == NULL)
             printf("Failed to open file bajer.raw.\n");
 

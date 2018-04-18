@@ -87,13 +87,13 @@ void ReDerp(int *Huff, int *Puff, float delay, int decay)
     static uint16_t iter = 0;
     if (iter == 0)
     {
-        Puff[0] += Huff[layS];
+        *Puff += *(Huff + layS);
     }
     else
     {
-        Puff[0] += Huff[iter - 1];
+        *Puff += *(Huff + (iter - 1));
     }
-    Huff[iter] = (decay * Puff[0]);
+    *(Huff + iter) = (decay * *Puff);
     iter++;
     if (iter == (layS + 1))
     {

@@ -52,11 +52,11 @@ int ReadRaw(char * namae, int state)
     return answer;
 }
 
-void WRaw(int * Smack, char * name, int state)
+void WRaw(char * name, int state)
 {
+    FILE *pout;
     if (state)
     {
-        FILE *pout;
         pout = fopen(name, "wb");
         fwrite(Puff, 1, 1, name);
     }
@@ -66,17 +66,17 @@ void WRaw(int * Smack, char * name, int state)
     }
 }
 
-void ReDerp(int *Huff, int *Puff, int delay, int decay)
+void ReDerp(int *Huff, int *Puff, float delay, int decay)
 {
-    static int layS = (int) ((float) delay * 44.1f); // assumes 44100 Hz sample rate
+    int layS = (delay * 44.1f); // assumes 44100 Hz sample rate
     static uint16_t iter = 0;
     if (iter == 0)
     {
-        Puff[0] += Huff[layS]
+        Puff[0] += Huff[layS];
     }
     else
     {
-        Puff[0] += Huff[iter - 1]
+        Puff[0] += Huff[iter - 1];
     }
     Huff[iter] = (decay * Puff[0]);
     iter++;

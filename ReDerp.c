@@ -47,6 +47,7 @@ int ReadRaw(int state)
     {
 
         fread(Puff, 1, 1, stick);
+        printf("%d.\n", Puff[0]);
         if (feof(stick) > 0)
         {
             printf("Going in VASA-Style.\n");

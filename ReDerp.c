@@ -109,6 +109,7 @@ int main(void)
         WRaw(1);
         crap = ReadRaw(1);
     }
+    printf("Impregnation done.\n");
     ReadRaw(0);
     WRaw(0);
     return 0;

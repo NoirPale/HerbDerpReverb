@@ -75,7 +75,8 @@ void WRaw(int state)
     if (state)
     {
         printf("soggy condom\n");
-        fwrite(Puff, 1, 1, pout);
+        //fwrite(Puff, 1, 1, pout);
+        fputc(*Puff, pout);
         printf("Hele molevitten.\n");
     }
     else
@@ -86,21 +87,13 @@ void WRaw(int state)
 
 void ReDerp(int *Huff, int *Puff, float delay, float decay)
 {
-    printf("1 kartofler.raw.\n");
-    int store;
-    printf("2 kartofler.raw.\n");
+    int store;);
     int layS = (delay * 44.1f); // assumes 44100 Hz sample rate
-    printf("3 kartofler.raw.\n");
     static uint16_t iter = 0;
-    printf("4 kartofler.raw.\n");
     *Puff += *(Huff + iter);
-    printf("5 kartofler.raw.\n");
     store = *Puff;
-    printf("6 kartofler.raw.\n");
     *(Huff + iter) = (decay * store);
-    printf("7 kartofler.raw.\n");
     iter++;
-    printf("8 kartofler.raw.\n");
     if (iter == (layS + 1))
     {
         printf("pølse.raw.\n");

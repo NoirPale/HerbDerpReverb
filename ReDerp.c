@@ -26,7 +26,7 @@
 
 /*****************************   Variables   ********************************/
 int Huff[22050] = { 0 };
-int Puff[2];
+int Puff[100];
 /*****************************   Functions   *********************************
  *   Function : See General module specification (general.h-file).
  *****************************************************************************/
@@ -47,7 +47,7 @@ int ReadRaw(int state)
     {
 
         fread(Puff, 1, 1, stick);
-        printf("%d.\n", Puff[0]);
+        printf("%d %d %d %d.\n", Puff[0], Puff[1], Puff[2], Puff[3]);
         if (feof(stick) > 0)
         {
             printf("Going in VASA-Style.\n");

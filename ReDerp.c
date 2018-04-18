@@ -101,10 +101,13 @@ int main(void)
 
     float delay = 250;
     float decay = -0.25f;
-    while (ReadRaw(1))
+    int crap;
+    crap = ReadRaw(1);
+    while (crap)
     {
         ReDerp(Huff, Puff, delay, decay);
         WRaw(1);
+        crap = ReadRaw(1);
     }
     ReadRaw(0);
     WRaw(0);

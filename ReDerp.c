@@ -25,21 +25,24 @@
 /*****************************   Constants   ********************************/
 
 /*****************************   Variables   ********************************/
-int Huff[22050] = {0};
+int Huff[22050] = { 0 };
 int Puff[2];
 /*****************************   Functions   *********************************
  *   Function : See General module specification (general.h-file).
  *****************************************************************************/
 
-int ReadRaw(char * namae, int state)
+int ReadRaw(int state)
 {
     FILE *stick;
     int answer = 1;
     if (state)
     {
 
-        stick = fopen(namae, "rb");
-        fread(Puff, 2, 1, stick);
+        stick = fopen("moeller.raw", "rb");
+        if(stick == NULL)
+            printf("Failed to open file moeller.raw.\n");
+
+        fread(Puff, 1, 1, stick);
         if (feof(stick) > 0)
         {
             answer = 0;
@@ -52,12 +55,16 @@ int ReadRaw(char * namae, int state)
     return answer;
 }
 
-void WRaw(char * name, int state)
+void WRaw(int state)
 {
     FILE *pout;
+
     if (state)
     {
-        pout = fopen(name, "wb");
+        pout = fopen("bajer.raw", "wb");
+        if (pout == NULL)
+            printf("Failed to open file bajer.raw.\n");
+
         fwrite(Puff, 1, 1, pout);
     }
     else
@@ -91,13 +98,13 @@ int main(void)
 
     int delay = 250;
     float decay = -0.25f;
-    while(ReadRaw("moeller.raw",1))
+    while (ReadRaw(1))
     {
-    ReDerp(Huff, Puff, delay, decay);
-    WRaw("bajer.raw",1);
+        ReDerp(Huff, Puff, delay, decay);
+        WRaw(1);
     }
-    ReadRaw("moeller.raw", 0);
-    WRaw("bajer.raw",0);
+    ReadRaw(0);
+    WRaw(0);
     return 0;
 }
 

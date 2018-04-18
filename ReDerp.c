@@ -96,7 +96,7 @@ void ReDerp(int *Huff, int *Puff, float delay, int decay)
 int main(void)
 {
 
-    int delay = 250;
+    float delay = 250;
     float decay = -0.25f;
     while (ReadRaw(1))
     {

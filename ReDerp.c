@@ -83,6 +83,7 @@ void WRaw(int state)
 
 void ReDerp(int *Huff, int *Puff, float delay, int decay)
 {
+    int store;
     int layS = (delay * 44.1f); // assumes 44100 Hz sample rate
     static uint16_t iter = 0;
     if (iter == 0)
@@ -93,7 +94,8 @@ void ReDerp(int *Huff, int *Puff, float delay, int decay)
     {
         *Puff += *(Huff + (iter - 1));
     }
-    *(Huff + iter) = (decay * *Puff);
+    store = *Puff;
+    *(Huff + iter) = (decay * store);
     iter++;
     if (iter == (layS + 1))
     {

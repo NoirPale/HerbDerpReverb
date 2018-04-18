@@ -46,7 +46,7 @@ int ReadRaw(int state)
     if (state)
     {
 
-        fread(Puff, 1, 1, stick);
+        fread(Puff, 1, 4, stick);
         printf("%d %d %d %d.\n", Puff[0], Puff[1], Puff[2], Puff[3]);
         if (feof(stick) > 0)
         {
@@ -85,17 +85,27 @@ void WRaw(int state)
 
 void ReDerp(int *Huff, int *Puff, float delay, float decay)
 {
+    printf("1 kartofler.raw.\n");
     int store;
+    printf("2 kartofler.raw.\n");
     int layS = (delay * 44.1f); // assumes 44100 Hz sample rate
+    printf("3 kartofler.raw.\n");
     static uint16_t iter = 0;
+    printf("4 kartofler.raw.\n");
     *Puff += *(Huff + iter);
+    printf("5 kartofler.raw.\n");
     store = *Puff;
+    printf("6 kartofler.raw.\n");
     *(Huff + iter) = (decay * store);
+    printf("7 kartofler.raw.\n");
     iter++;
+    printf("8 kartofler.raw.\n");
     if (iter == (layS + 1))
     {
+        printf("pølse.raw.\n");
         iter = 0;
     }
+    printf("Why you no WORK.\n");
 }
 
 int main(void)

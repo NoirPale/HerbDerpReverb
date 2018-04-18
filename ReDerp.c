@@ -18,7 +18,8 @@
 *****************************************************************************/
 
 /***************************** Include files ********************************/
-#include <>
+#include <stdio.h>
+#include <stdint.h>
 /*****************************    Defines    ********************************/
 
 /*****************************   Constants   ********************************/
@@ -47,7 +48,26 @@ int * ReDerp(int *Puff)
 
 int main (void)
 {
+    FILE *p_in, *p_out;
+       p_in = fopen("PLACEHOLDER", "rb");
+       p_out = fopen("PLACEHOLDER", "wb");
+       int buffer[22050];
+       fread(buffer, )
+       int delay = 500; // half a second
+       int delaySamples =
+           (int)((float)delay * 44.1f); // assumes 44100 Hz sample rate
+       float decay = 0.5f;
+       for (int i = 0; i < buffer.length - delaySamples; i++)
+       {
+           // WARNING: overflow potential
+           fread(buffer, 2, 1, p_in);
+           buffer[i + delaySamples] += (short)((float)buffer[i] * decay);
+       }
 
+       fclose(p_in);
+       fclose(p_out);
+
+       return 0;
 }
 
 /****************************** End Of Module *******************************/

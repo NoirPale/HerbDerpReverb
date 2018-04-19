@@ -15,7 +15,7 @@ int main() {
   FILE * pFilein;
   FILE * pFileout;
 
-  pFilein = fopen("moeller.raw", "r");
+  pFilein = fopen("a_unsigned_8bit_44100.raw", "r");
   if (pFilein == NULL)
   {
     fputs("Failed to open file\n.", stderr);
@@ -32,7 +32,7 @@ int main() {
   while (feof(pFilein) == 0)
   {
     buffer = file_read(pFilein);
-    file_write(pFileout, buffer, 0.05, 150);
+    file_write(pFileout, buffer, 0.25, 250);
   }
 
   fclose(pFilein);

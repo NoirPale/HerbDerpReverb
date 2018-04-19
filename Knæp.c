@@ -7,10 +7,10 @@ int main() {
   int Huff[33000] = { 0 };
   uint8_t buffer = 0;
   uint16_t iter = 0;
-  float delay = 500, decay = 0.30;
+  float delay = 250, decay = 0.25;
   int layS = (delay * 44.1f);
 
-  pFilein = fopen("moeller.raw", "r");
+  pFilein = fopen("a_unsigned_8bit_44100.raw", "r");
   pFileout = fopen("bajer.raw", "w");
 
   if(pFilein == NULL) {

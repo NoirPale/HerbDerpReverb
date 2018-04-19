@@ -10,7 +10,7 @@ int main() {
   float delay = 250, decay = -0.25;
   int layS = (delay * 44.1f);
 
-  pFilein = fopen("Dammmit.raw", "r");
+  pFilein = fopen("Dammit.raw", "r");
   pFileout = fopen("damn.raw", "w");
 
   if(pFilein == NULL) {

@@ -4,10 +4,10 @@
 
 int main() {
   FILE * pFilein, *pFileout;
-  int Huff[33000] = { 0 };
-  uint8_t buffer = 0;
+  signed int Huff[44101] = { 0 };
+  signed int buffer = 0;
   uint16_t iter = 0;
-  float delay = 500, decay = 0.30;
+  float delay = 500, decay = -0.30;
   int layS = (delay * 44.1f);
 
   pFilein = fopen("moeller.raw", "r");

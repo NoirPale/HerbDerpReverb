@@ -6,14 +6,14 @@ void file_read(FILE * pFilein);
 void file_write(FILE * pFileout);
 void echo_effect(float decay, uint16_t delay);
 
-int Huff[44101] = { 0 };
+float Huff[44101] = { 0 };
 
 FILE * pFilein;
 FILE * pFileout;
 
 int main() 
 {
-  pFilein = fopen("a_unsigned_8bit_44100.raw", "rb");
+  pFilein = fopen("Dammmit.raw", "rb");
   if (pFilein == NULL)
   {
     fputs("Failed to open file\n.", stderr);
@@ -49,12 +49,12 @@ void file_write(FILE * pFileout)
 */
 void echo_effect(float decay, uint16_t delay)
 { 
-  static uint8_t buffer; 
+  float buffer; 
   static uint16_t iter;
 
   int layS = ((float) delay * 44.1f);
 
-  fread(&buffer, 1, 1, pFilein);
+  fread(&buffer, 4, 1, pFilein);
 
   buffer += Huff[iter];
   Huff[iter] = (decay * buffer);
@@ -65,6 +65,6 @@ void echo_effect(float decay, uint16_t delay)
     printf("pølse.raw.\n");
     iter = 0;
   }
-  fwrite(&buffer, 1, 1, pFileout);
+  fwrite(&buffer, 4, 1, pFileout);
 }
 

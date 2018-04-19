@@ -40,15 +40,14 @@ int ReadRaw(int state)
     {
         stick = fopen("moeller.raw", "rb");
         if (stick == NULL)
-            printf("Failed to open file moeller.raw.\n");
+            printf("Failed to spread.\n");
         virgin = 0;
     }
 
     if (state)
     {
 
-        fread(&Puff, (size_t) 1, (size_t) 1, stick);
-        //printf("%d %d.\n", Puff[0], Puff[1]);
+        fread(&Puff,1,1, stick);
         if (feof(stick) > 0)
         {
             printf("Going in VASA-Style.\n");
@@ -71,40 +70,33 @@ void WRaw(int state)
     {
         pout = fopen("bajer.raw", "wb");
         if (pout == NULL)
-            printf("Failed to open file bajer.raw.\n");
+            printf("Failed to lubricate.\n");
         touched_for_the_very_first_time = 0;
     }
-    fclose(pout);
     if (state)
     {
-        printf("Trying to write to file.\n");
+        printf("Trying to unscrew.\n");
         fwrite(&Puff, (size_t) 1, (size_t) 1, pout);
     }
     else
     {
         printf("soggy condom\n");
-//        fputc(*fuck_off, pout);
-        printf("Hele molevitten.\n");
         fclose(pout);
     }
 }
 
 void ReDerp(int *Huff, int Puff, float delay, float decay)
 {
-    int store;
     int layS = (delay * 44.1f); // assumes 44100 Hz sample rate
     static uint16_t iter = 0;
     Puff += *(Huff + iter);
-    store = Puff;
-    *(Huff + iter) = (decay * store);
+    *(Huff + iter) = (decay * Puff);
     iter++;
     if (iter == (layS + 1))
     {
         printf("pølse.raw.\n");
         iter = 0;
     }
- //   printf("Why you no WORK %d Rød bil %d Gul bil %d Post Bil %d Felt madress.\n",
-    //       *(Huff + 1), *(Huff), *(Puff), iter);
 }
 
 int main(void)
@@ -112,8 +104,6 @@ int main(void)
 
     float delay = 250;
     float decay = 0.25f;
-    int crap;
- //   crap = ReadRaw(1);
     while (ReadRaw(1))
     {
         ReDerp(Huff, Puff, delay, decay);

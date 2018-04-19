@@ -5,7 +5,7 @@
 uint8_t file_read(FILE * pFilein);
 void file_write(FILE * pFileout, uint8_t buffer, float decay, uint16_t delay);
 
-int Huff[22050] = { 0 };
+int Huff[44101] = { 0 };
 uint8_t buffer = 0;
 
 
@@ -32,7 +32,7 @@ int main() {
   while (feof(pFilein) == 0)
   {
     buffer = file_read(pFilein);
-    file_write(pFileout, buffer, 0.5, 250);
+    file_write(pFileout, buffer, 0.05, 150);
   }
 
   fclose(pFilein);

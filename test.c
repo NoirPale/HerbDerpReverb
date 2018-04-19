@@ -2,13 +2,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-int file_read();
-void file_write(uint8_t buffer);
-
-FILE * pFilein;
-FILE * pFileout;
-
 int main() {
+<<<<<<< HEAD
 
   uint8_t buffer;
   printf("entering while loop.\n");
@@ -22,16 +17,19 @@ int main() {
   fclose(pFileout);
   return 0;
 }
+=======
+  FILE * pFilein, *pFileout;
+  uint8_t buffer = 0;
+>>>>>>> refs/remotes/origin/master
 
-int file_read() {
-  uint8_t buffer;
+  pFilein = fopen("moeller.raw", "r");
+  pFileout = fopen("bajer.raw", "w");
 
-  pFilein = fopen("moeller.raw", "rb");
-  if (pFilein == NULL)
-  {
-    fputs("Failed to open file\n.", stderr);
+  if(pFilein == NULL) {
+    fputs("Error opening input file\n", stderr);
     exit(1);
   }
+<<<<<<< HEAD
   printf("Trying to read from file.\n");
   fread(&buffer, 1, 1, pFilein);
   return buffer;
@@ -40,13 +38,21 @@ int file_read() {
 void file_write(uint8_t buffer)
 {
   pFileout = fopen("bajer.raw", "wb");
+=======
+>>>>>>> refs/remotes/origin/master
 
-  if (pFileout == NULL)
-  {
-    fputs("Error opening output file\n", stderr);
-    exit(1);
+  while(feof(pFilein) == 0) {
+    fread(&buffer, 1, 1, pFilein);
+    fwrite(&buffer, 1, 1, pFileout);
   }
+<<<<<<< HEAD
   printf("Trying to write to file.\n");
   fwrite(&buffer, 1, 1, pFileout);
   return;
+=======
+
+  fclose(pFilein);
+  fclose(pFileout);
+  return 0;
+>>>>>>> refs/remotes/origin/master
 }

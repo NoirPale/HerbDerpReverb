@@ -4,7 +4,7 @@
 
 int main() {
   FILE * pFilein, *pFileout;
-  int Huff[33000] = { 0 };
+  int Huff[44101] = { 0 };
   uint8_t buffer = 0;
   uint16_t iter = 0;
   float delay = 250, decay = 0.25;

@@ -63,6 +63,8 @@ int ReadRaw(int state)
 
 void WRaw(int state)
 {
+    static int iter = 0;
+    int fuck_off[600000];
     static int touched_for_the_very_first_time = 1;
     FILE *pout;
     if (touched_for_the_very_first_time)
@@ -74,15 +76,19 @@ void WRaw(int state)
     }
     if (state)
     {
-        printf("soggy condom\n");
-        //fwrite(Puff, 1, 1, pout);
-        fputc(*Puff, pout);
-        printf("Hele molevitten.\n");
+        fuck_off[iter]  = *Puff;
+        printf("Not soggy condom\n");
+        ++iter;
     }
     else
     {
+        printf("soggy condom\n");
+        fwrite(fuck_off, 1, iter, pout);
+//        fputc(*fuck_off, pout);
+        printf("Hele molevitten.\n");
         fclose(pout);
     }
+    printf("Wraw complete\n");
 }
 
 void ReDerp(int *Huff, int *Puff, float delay, float decay)
@@ -113,6 +119,7 @@ int main(void)
     {
         ReDerp(Huff, Puff, delay, decay);
         WRaw(1);
+        printf("it reached wraw");
         crap = ReadRaw(1);
         printf("Loop deLoop.\n");
     }

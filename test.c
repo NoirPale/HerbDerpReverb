@@ -5,21 +5,14 @@
 int file_read();
 void file_write(uint8_t buffer);
 
+FILE * pFilein;
+FILE * pFileout;
+
 int main() {
-  FILE * pFilein, *pFileout;
-  uint8_t buffer = 0;
-
-  pFilein = fopen("moeller.raw", "r");
-  pFileout = fopen("bajer.raw", "w");
-
-  if(pFilein == NULL) {
-    fputs("Error opening input file\n", stderr);
-    exit(1);
-  }
-
-  while(feof(pFilein) == 0) {
-    fread(&buffer, 1, 1, pFilein);
-    fwrite(&buffer, 1, 1, pFileout);
+  while(feof(pFilein) == 0)
+  {
+    file_read();
+    file_write(file_read());
   }
 
   fclose(pFilein);
@@ -29,7 +22,6 @@ int main() {
 
 int file_read() {
   uint8_t buffer;
-  FILE * pFilein;
 
   pFilein = fopen("moeller.raw", "rb");
   if (pFilein == NULL)
@@ -43,14 +35,12 @@ int file_read() {
 
 void file_write(uint8_t buffer)
 {
-  FILE * pFileout;
   pFileout = fopen("bajer.raw", "wb");
 
   if (pFileout == NULL)
   {
-
+    fputs("Error opening output file\n", stderr);
+    exit(1);
   }
-
-
-
+  fwrite(&buffer, 1, 1, pFileout);
 }

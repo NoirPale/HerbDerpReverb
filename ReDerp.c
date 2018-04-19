@@ -26,7 +26,7 @@
 
 /*****************************   Variables   ********************************/
 int Huff[22050] = { 0 };
-int Puff[2];
+int Puff;
 /*****************************   Functions   *********************************
  *   Function : See General module specification (general.h-file).
  *****************************************************************************/
@@ -43,17 +43,19 @@ int ReadRaw(int state)
             printf("Failed to open file moeller.raw.\n");
         virgin = 0;
     }
+
     if (state)
     {
 
-        fread(Puff, 1, 1, stick);
-        printf("%d %d.\n", Puff[0], Puff[1]);
+        fread(&Puff, (size_t) 1, (size_t) 1, stick);
+        //printf("%d %d.\n", Puff[0], Puff[1]);
         if (feof(stick) > 0)
         {
             printf("Going in VASA-Style.\n");
             answer = 0;
         }
     }
+
     else
     {
         fclose(stick);
@@ -72,10 +74,11 @@ void WRaw(int state)
             printf("Failed to open file bajer.raw.\n");
         touched_for_the_very_first_time = 0;
     }
+    fclose(pout);
     if (state)
     {
         printf("Trying to write to file.\n");
-        fwrite(Puff, 1, 1, pout);
+        fwrite(&Puff, (size_t) 1, (size_t) 1, pout);
     }
     else
     {
@@ -86,13 +89,13 @@ void WRaw(int state)
     }
 }
 
-void ReDerp(int *Huff, int *Puff, float delay, float decay)
+void ReDerp(int *Huff, int Puff, float delay, float decay)
 {
     int store;
     int layS = (delay * 44.1f); // assumes 44100 Hz sample rate
     static uint16_t iter = 0;
-    *Puff += *(Huff + iter);
-    store = *Puff;
+    Puff += *(Huff + iter);
+    store = Puff;
     *(Huff + iter) = (decay * store);
     iter++;
     if (iter == (layS + 1))
@@ -110,16 +113,17 @@ int main(void)
     float delay = 250;
     float decay = 0.25f;
     int crap;
-    crap = ReadRaw(1);
-    while (crap)
+ //   crap = ReadRaw(1);
+    while (ReadRaw(1))
     {
         ReDerp(Huff, Puff, delay, decay);
         printf("ReDerp executed.\n");
         WRaw(1);
         printf("WRaw executed.\n");
-        crap = ReadRaw(1);
         printf("Loop deLoop.\n");
     }
+
+
     printf("Impregnation done.\n");
     ReadRaw(0);
     WRaw(0);

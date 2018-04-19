@@ -9,10 +9,13 @@ FILE * pFilein;
 FILE * pFileout;
 
 int main() {
+
+  uint8_t buffer;
+  printf("entering while loop.\n");
   while(feof(pFilein) == 0)
   {
-    file_read();
-    file_write(file_read());
+    buffer = file_read();
+    file_write(buffer);
   }
 
   fclose(pFilein);
@@ -29,6 +32,7 @@ int file_read() {
     fputs("Failed to open file\n.", stderr);
     exit(1);
   }
+  printf("Trying to read from file.\n");
   fread(&buffer, 1, 1, pFilein);
   return buffer;
 }
@@ -42,5 +46,7 @@ void file_write(uint8_t buffer)
     fputs("Error opening output file\n", stderr);
     exit(1);
   }
+  printf("Trying to write to file.\n");
   fwrite(&buffer, 1, 1, pFileout);
+  return;
 }

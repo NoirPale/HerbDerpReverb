@@ -84,7 +84,6 @@ void WRaw(int state)
         printf("Hele molevitten.\n");
         fclose(pout);
     }
-    printf("Wraw complete\n");
 }
 
 void ReDerp(int *Huff, int *Puff, float delay, float decay)
@@ -101,7 +100,7 @@ void ReDerp(int *Huff, int *Puff, float delay, float decay)
         printf("pølse.raw.\n");
         iter = 0;
     }
-    printf("Why you no WORK %d Rød bil %d Gul bil %d Post Bil %d Felt madress.\n",
+ //   printf("Why you no WORK %d Rød bil %d Gul bil %d Post Bil %d Felt madress.\n",
            *(Huff + 1), *(Huff), *(Puff), iter);
 }
 
@@ -115,6 +114,7 @@ int main(void)
     while (crap)
     {
         ReDerp(Huff, Puff, delay, decay);
+        printf("ReDerp executed.\n");
         WRaw(1);
         printf("it got to readraw");
         crap = ReadRaw(1);

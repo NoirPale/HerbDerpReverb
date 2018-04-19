@@ -10,23 +10,23 @@ int main() {
   float delay = 250, decay = -0.25;
   int layS = (delay * 44.1f);
 
-  pFilein = fopen("a_unsigned_8bit_44100.raw", "r");
-  pFileout = fopen("bajer.raw", "w");
+  pFilein = fopen("Dammmit.raw", "r");
+  pFileout = fopen("damn.raw", "w");
 
   if(pFilein == NULL) {
     fputs("Error opening input file\n", stderr);
     exit(1);
   }
   while(feof(pFilein) == 0) {
-    fread(&buffer, 1, 1, pFilein);
+    fread(&buffer, 4, 4, pFilein);
     buffer += *(Huff + iter);
-        *(Huff + iter) = (decay * buffer);
+        *(Huff + iter) = (buffer * decay);
         iter++;
         if (iter == (layS + 1))
         {
             iter = 0;
         }
-    fwrite(&buffer, 1, 1, pFileout);
+    fwrite(&buffer, 4, 4, pFileout);
   }
 
   fclose(pFilein);

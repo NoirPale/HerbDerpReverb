@@ -116,7 +116,7 @@ int main(void)
         ReDerp(Huff, Puff, delay, decay);
         printf("ReDerp executed.\n");
         WRaw(1);
-        printf("it got to readraw");
+        printf("WRaw executed.\n");
         crap = ReadRaw(1);
         printf("Loop deLoop.\n");
     }

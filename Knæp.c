@@ -18,7 +18,7 @@ int main() {
     exit(1);
   }
   while(feof(pFilein) == 0) {
-    fread(&buffer, 4, 4, pFilein);
+    fread(&buffer, 4, 1, pFilein);
     buffer += *(Huff + iter);
         *(Huff + iter) = (buffer * decay);
         iter++;
@@ -26,7 +26,7 @@ int main() {
         {
             iter = 0;
         }
-    fwrite(&buffer, 4, 4, pFileout);
+    fwrite(&buffer, 4, 1, pFileout);
   }
 
   fclose(pFilein);

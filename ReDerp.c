@@ -101,7 +101,7 @@ void ReDerp(int *Huff, int *Puff, float delay, float decay)
         iter = 0;
     }
  //   printf("Why you no WORK %d Rød bil %d Gul bil %d Post Bil %d Felt madress.\n",
-           *(Huff + 1), *(Huff), *(Puff), iter);
+    //       *(Huff + 1), *(Huff), *(Puff), iter);
 }
 
 int main(void)

@@ -2,27 +2,25 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-uint8_t file_read(FILE * pFilein);
-void file_write(FILE * pFileout, uint8_t buffer, float decay, uint16_t delay);
+void file_read(FILE * pFilein);
+void file_write(FILE * pFileout);
+void echo_effect(float decay, uint16_t delay);
 
 int Huff[44101] = { 0 };
-uint8_t buffer = 0;
 
+FILE * pFilein;
+FILE * pFileout;
 
-int main() {
-
-  uint8_t buffer;
-  FILE * pFilein;
-  FILE * pFileout;
-
-  pFilein = fopen("a_unsigned_8bit_44100.raw", "r");
+int main() 
+{
+  pFilein = fopen("a_unsigned_8bit_44100.raw", "rb");
   if (pFilein == NULL)
   {
     fputs("Failed to open file\n.", stderr);
     exit(1);
   }
 
-  pFileout = fopen("bajer.raw", "w");
+  pFileout = fopen("test.raw", "wb");
   if (pFileout == NULL)
   {
     fputs("Error opening output file\n", stderr);
@@ -31,28 +29,35 @@ int main() {
 
   while (feof(pFilein) == 0)
   {
-    buffer = file_read(pFilein);
-    file_write(pFileout, buffer, 0.25, 250);
+    echo_effect(0.25, 250);
   }
 
   fclose(pFilein);
   fclose(pFileout);
   return 0;
 }
-
-uint8_t file_read(FILE * pFilein) {
-  uint8_t buffer;
+/*
+void file_read(FILE * pFilein)
+{
   fread(&buffer, 1, 1, pFilein);
-  return buffer;
 }
 
-void file_write(FILE * pFileout, uint8_t buffer, float decay, uint16_t delay)
+void file_write(FILE * pFileout)
 {
-  int layS = ((float)delay * 44.1f);
-  uint16_t iter = 0;
+  fwrite(&buffer, 1, 1, pFileout);
+}
+*/
+void echo_effect(float decay, uint16_t delay)
+{ 
+  static uint8_t buffer; 
+  static uint16_t iter;
 
-  buffer += *(Huff + iter);
-  *(Huff + iter) = (decay * buffer);
+  int layS = ((float) delay * 44.1f);
+
+  fread(&buffer, 1, 1, pFilein);
+
+  buffer += Huff[iter];
+  Huff[iter] = (decay * buffer);
   iter++;
 
   if (iter == (layS + 1))
@@ -60,6 +65,6 @@ void file_write(FILE * pFileout, uint8_t buffer, float decay, uint16_t delay)
     printf("pølse.raw.\n");
     iter = 0;
   }
-
   fwrite(&buffer, 1, 1, pFileout);
 }
+

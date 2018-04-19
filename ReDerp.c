@@ -74,10 +74,8 @@ void WRaw(int state)
     }
     if (state)
     {
-        printf("soggy condom\n");
-        //fwrite(Puff, 1, 1, pout);
-        fputc(*Puff, pout);
-        printf("Hele molevitten.\n");
+        printf("Trying to write to file.\n");
+        fwrite(Puff, 1, 1, pout);
     }
     else
     {
@@ -116,7 +114,7 @@ int main(void)
     crap = ReadRaw(1);
     while (crap)
     {
-        //ReDerp(Huff, Puff, delay, decay);
+        ReDerp(Huff, Puff, delay, decay);
         WRaw(1);
         printf("it got to readraw");
         crap = ReadRaw(1);

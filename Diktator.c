@@ -2,38 +2,38 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-int main() {
-  FILE * pFilein, *pFileout;
-  float Huff[44101] = { 0 };
-  float buffer = 0;
-  uint16_t iter = 0;
-  float delay = 125, decay = -0.05, decay2 = -0.25;
-  int layS = (delay * 44.1f);
+int main()
+{
+    FILE * pFilein, *pFileout;
+    float Huff[44101] = { 0 };
+    float buffer = 0;
+    uint16_t iter = 0;
+    float delay = 125, decay = -0.05, decay2 = -0.25;
+    int layS = (delay * 44.1f);
 
-  pFilein = fopen("Dammmit.raw", "r");
-  pFileout = fopen("damn.raw", "w");
+    pFilein = fopen("a_floater.raw", "r");
+    pFileout = fopen("damn.raw", "w");
 
-  if(pFilein == NULL) {
-    fputs("Error opening input file\n", stderr);
-    exit(1);
-  }
-  fread(&buffer, 4, 1, pFilein);
-  buffer += *(Huff + iter);
-      *(Huff + iter) = (buffer * decay2);
-      iter++;
-  while(feof(pFilein) == 0) {
-    fread(&buffer, 4, 1, pFilein);
-    buffer += *(Huff + iter);
+    if (pFilein == NULL)
+    {
+        fputs("Error opening input file\n", stderr);
+        exit(1);
+    }
+    while (feof(pFilein) == 0)
+    {
+        fread(&buffer, 4, 1, pFilein);
+        buffer += *(Huff + iter);
         *(Huff + iter) = (buffer * decay);
+        *(Huff + iter) = (buffer * decay2);
         iter++;
         if (iter == (layS + 1))
         {
             iter = 0;
         }
-    fwrite(&buffer, 4, 1, pFileout);
-  }
+        fwrite(&buffer, 4, 1, pFileout);
+    }
 
-  fclose(pFilein);
-  fclose(pFileout);
-  return 0;
+    fclose(pFilein);
+    fclose(pFileout);
+    return 0;
 }

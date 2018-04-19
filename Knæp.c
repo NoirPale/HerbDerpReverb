@@ -10,8 +10,13 @@ int main() {
   float delay = 250, decay = -0.25;
   int layS = (delay * 44.1f);
 
+<<<<<<< Updated upstream
   pFilein = fopen("Dammmit.raw", "r");
   pFileout = fopen("damn.raw", "w");
+=======
+  pFilein = fopen("a_signed_32bit_44100_float.raw", "r");
+  pFileout = fopen("bajer.raw", "w");
+>>>>>>> Stashed changes
 
   if(pFilein == NULL) {
     fputs("Error opening input file\n", stderr);

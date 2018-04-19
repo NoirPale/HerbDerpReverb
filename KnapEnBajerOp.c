@@ -7,9 +7,12 @@ int main() {
   signed int Huff[44101] = { 0 };
   signed int buffer = 0;
   uint16_t iter = 0;
+  float delay = 250, decay = 0.15;
   float delay = 250, decay = -1;
   int layS = (delay * 44.1f);
 
+  pFilein = fopen("a_signed_8bit_44100.raw", "r");
+  pFileout = fopen("bajer.raw", "w");
   pFilein = fopen("a_unsigned_8bit_44100.raw", "r");
   pFileout = fopen("Øller.raw", "w");
 

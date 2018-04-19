@@ -4,10 +4,10 @@
 
 int main() {
   FILE * pFilein, *pFileout;
-  int Huff[44101] = { 0 };
-  uint8_t buffer = 0;
+  float Huff[44101] = { 0 };
+  float buffer = 0;
   uint16_t iter = 0;
-  float delay = 250, decay = 0.25;
+  float delay = 250, decay = -0.25;
   int layS = (delay * 44.1f);
 
   pFilein = fopen("a_unsigned_8bit_44100.raw", "r");

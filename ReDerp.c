@@ -26,7 +26,7 @@
 
 /*****************************   Variables   ********************************/
 int Huff[22050] = { 0 };
-int Puff[100];
+int Puff[2];
 /*****************************   Functions   *********************************
  *   Function : See General module specification (general.h-file).
  *****************************************************************************/
@@ -47,7 +47,7 @@ int ReadRaw(int state)
     {
 
         fread(Puff, 1, 1, stick);
-        printf("%d %d %d %d.\n", Puff[0], Puff[1], Puff[2], Puff[3]);
+        printf("%d %d.\n", Puff[0], Puff[1]);
         if (feof(stick) > 0)
         {
             printf("Going in VASA-Style.\n");
@@ -63,8 +63,6 @@ int ReadRaw(int state)
 
 void WRaw(int state)
 {
-    static int iter = 0;
-    int fuck_off[600000];
     static int touched_for_the_very_first_time = 1;
     FILE *pout;
     if (touched_for_the_very_first_time)
@@ -76,14 +74,14 @@ void WRaw(int state)
     }
     if (state)
     {
-        fuck_off[iter]  = *Puff;
-        printf("Not soggy condom\n");
-        ++iter;
+        printf("soggy condom\n");
+        //fwrite(Puff, 1, 1, pout);
+        fputc(*Puff, pout);
+        printf("Hele molevitten.\n");
     }
     else
     {
         printf("soggy condom\n");
-        fwrite(fuck_off, 1, iter, pout);
 //        fputc(*fuck_off, pout);
         printf("Hele molevitten.\n");
         fclose(pout);
@@ -105,7 +103,8 @@ void ReDerp(int *Huff, int *Puff, float delay, float decay)
         printf("pølse.raw.\n");
         iter = 0;
     }
-    printf("Why you no WORK %d Rød bil %d Gul bil %d Post Bil %d Felt madress.\n", *(Huff + 1), *(Huff), *(Puff), iter);
+    printf("Why you no WORK %d Rød bil %d Gul bil %d Post Bil %d Felt madress.\n",
+           *(Huff + 1), *(Huff), *(Puff), iter);
 }
 
 int main(void)
@@ -117,9 +116,9 @@ int main(void)
     crap = ReadRaw(1);
     while (crap)
     {
-        ReDerp(Huff, Puff, delay, decay);
+        //ReDerp(Huff, Puff, delay, decay);
         WRaw(1);
-        printf("it reached wraw");
+        printf("it got to readraw");
         crap = ReadRaw(1);
         printf("Loop deLoop.\n");
     }

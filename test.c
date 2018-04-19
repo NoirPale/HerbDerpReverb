@@ -2,57 +2,64 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+uint8_t file_read(FILE * pFilein);
+void file_write(FILE * pFileout, uint8_t buffer, float decay, uint16_t delay);
+
+int Huff[22050] = { 0 };
+uint8_t buffer = 0;
+
+
 int main() {
-<<<<<<< HEAD
 
   uint8_t buffer;
-  printf("entering while loop.\n");
-  while(feof(pFilein) == 0)
+  FILE * pFilein;
+  FILE * pFileout;
+
+  pFilein = fopen("moeller.raw", "r");
+  if (pFilein == NULL)
   {
-    buffer = file_read();
-    file_write(buffer);
+    fputs("Failed to open file\n.", stderr);
+    exit(1);
+  }
+
+  pFileout = fopen("bajer.raw", "w");
+  if (pFileout == NULL)
+  {
+    fputs("Error opening output file\n", stderr);
+    exit(1);
+  }
+
+  while (feof(pFilein) == 0)
+  {
+    buffer = file_read(pFilein);
+    file_write(pFileout, buffer, 0.5, 250);
   }
 
   fclose(pFilein);
   fclose(pFileout);
   return 0;
 }
-=======
-  FILE * pFilein, *pFileout;
-  uint8_t buffer = 0;
->>>>>>> refs/remotes/origin/master
 
-  pFilein = fopen("moeller.raw", "r");
-  pFileout = fopen("bajer.raw", "w");
-
-  if(pFilein == NULL) {
-    fputs("Error opening input file\n", stderr);
-    exit(1);
-  }
-<<<<<<< HEAD
-  printf("Trying to read from file.\n");
+uint8_t file_read(FILE * pFilein) {
+  uint8_t buffer;
   fread(&buffer, 1, 1, pFilein);
   return buffer;
 }
 
-void file_write(uint8_t buffer)
+void file_write(FILE * pFileout, uint8_t buffer, float decay, uint16_t delay)
 {
-  pFileout = fopen("bajer.raw", "wb");
-=======
->>>>>>> refs/remotes/origin/master
+  int layS = ((float)delay * 44.1f);
+  uint16_t iter = 0;
 
-  while(feof(pFilein) == 0) {
-    fread(&buffer, 1, 1, pFilein);
-    fwrite(&buffer, 1, 1, pFileout);
+  buffer += *(Huff + iter);
+  *(Huff + iter) = (decay * buffer);
+  iter++;
+
+  if (iter == (layS + 1))
+  {
+    printf("pølse.raw.\n");
+    iter = 0;
   }
-<<<<<<< HEAD
-  printf("Trying to write to file.\n");
-  fwrite(&buffer, 1, 1, pFileout);
-  return;
-=======
 
-  fclose(pFilein);
-  fclose(pFileout);
-  return 0;
->>>>>>> refs/remotes/origin/master
+  fwrite(&buffer, 1, 1, pFileout);
 }

@@ -22,7 +22,7 @@ void sample_buffer_get_out(fp_sample_t * data);
 void sample_buffer_put_z(fp_sample_t *data, uint16_t z);
 void sample_buffer_get_z(fp_sample_t *data, uint16_t z);
 
-void mod_reverb_effekt( fp_sample_t *in, fp_sample_t *out);
+void mod_reverb_effekt( fp_sample_t *in, fp_sample_t *out, float in_gain, float fb_gain, uint16_t delay);
 void mod_echo_effekt( fp_sample_t *in, fp_sample_t *out);
 
 int main() {
@@ -39,11 +39,11 @@ int main() {
 
   static fp_sample_t buffer1;
   static fp_sample_t buffer2;
-  uint16_t iter = 0;
-  float delay = 150, decay = -0.2;
+ /* uint16_t iter = 0;
+  float delay = 2000, decay = -0.45;
   int layS = (delay * 44.1f);
-
-  pFilein = fopen("apeshit.raw", "r");
+*/
+  pFilein = fopen("dirac16_44_stereo.raw", "r");
   pFileout = fopen("Potatoe.raw", "w");
 
 
@@ -60,13 +60,128 @@ int main() {
 
     buffer1.right_fp32 = Knap;
 
-    mod_reverb_effekt( &buffer1, &buffer2 );
+  //  mod_reverb_effekt( &buffer1, &buffer2, -0.25, -0.25, 100 );
+
+   // buffer1 = buffer2;
+
+//    mod_echo_effekt(&buffer1, &buffer2);
+
+ //   buffer1 = buffer2;
+    float fb_gain = -0.20;
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 101 );
 
     buffer1 = buffer2;
-
-    mod_echo_effekt(&buffer1, &buffer2);
+    fb_gain += 0.01;
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 103 );
 
     buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 107 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 109 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 113 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 127 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 131 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 137 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 139 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 149 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 151 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 157 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 163 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 167 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 173 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 179 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 181 );
+
+    buffer1 = buffer2;
+    fb_gain += 0.01;
+
+
+    mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, 191 );
+
+    buffer1 = buffer2;
+    fb_gain = -0.20;
+/*    uint16_t count = 0;
+    uint16_t c = 0;
+    uint16_t i = 3;
+    float fb_gain = -0.30;
+    for ( count = 2 ; count <= 20 ;  )
+    {
+        for (c = 2 ; c <= i - 1 ; c++ )
+        {
+          if ( i%c == 0 )
+            break;
+        }
+        if ( c == i )
+        {
+          mod_reverb_effekt( &buffer1, &buffer2, -0.25, fb_gain, i);
+          buffer1 = buffer2;
+
+          fb_gain += 0.01;
+          count++;
+        }
+        i++;
+      }
+*/
 
     sample_buffer_get_out( &buffer1);
 
@@ -85,14 +200,14 @@ int main() {
 }
 
 
-void mod_reverb_effekt( fp_sample_t *in, fp_sample_t *out)
+void mod_reverb_effekt( fp_sample_t *in, fp_sample_t *out, float in_gain, float fb_gain, uint16_t delay)
 {
   if(1)
   {
-  const float in_gain = -0.25;
+/*  const float in_gain = -0.25;
   const float fb_gain = -0.05;
-  const uint16_t delay = 2000;
-
+  const uint16_t delay = 5000;
+*/
   fp_sample_t fp_sample;
   sample_buffer_get(&fp_sample);
 
